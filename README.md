@@ -81,12 +81,8 @@ default : true
 -Dapi=<value>		Identifies the default used API database
 --api		Identifies the default used API database
      available engines :
-     Engine Factory : com.web.libraries.imdbquery.api.controller.APIEngineFactory@3d0f8e03
-     Engine : com.web.libraries.imdbquery.api.controller.engines.TMDBApiEngine@6366ebe0
      tmdb		The Movie DB Rest API implementation (use -DexactSearch=0)
-     Engine : com.web.libraries.imdbquery.api.controller.engines.IMDBApiEngine@44f75083
      imdb		IMDB Rest API implementation
-     Engine : com.web.libraries.imdbquery.api.controller.engines.OMDBApiEngine@2698dc7
      omdb		OMDB Rest API implementation - APIKey activation in progress
 default : com.web.libraries.imdbquery.api.controller.engines.TMDBApiEngine@6366ebe0
 
