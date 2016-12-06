@@ -209,9 +209,7 @@ public class WebRestQueryHelper {
 		output.println("-D"+Constants.COMMAND_PROPERTY_API_DB+"=<value>\t\tIdentifies the default used API database");
 		output.println("--"+Constants.COMMAND_PROPERTY_API_DB+"\t\tIdentifies the default used API database");
 		output.println("     available engines :");
-		output.println("     Engine Factory : " + defaultApiFactory);
 		for (APIEngine engine: defaultApiFactory.getAvailableEngines()) {
-			output.println("     Engine : " + engine);
 			output.println("     " + engine.getSelector() + "\t\t" + engine.getDescription());
 		}
 		output.println("default : " + getDefultApiDatabase());
