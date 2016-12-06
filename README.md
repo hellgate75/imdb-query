@@ -1,4 +1,4 @@
-# IMDb Serch Shell
+# IMDb Search Shell
 
 
 ##Goals
