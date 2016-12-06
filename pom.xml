@@ -46,7 +46,7 @@
 
 	<distributionManagement>
 		<site>
-			<id>github-project-site</id>
+			<id>github</id>
 			<name>GitHub Project Pages</name>
 			<url>gitsite:git@github.com/hellgate75/imdb-query.git</url>
 		</site>
@@ -281,6 +281,11 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.19.1</version>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -302,22 +307,70 @@
 					<compilerArgument>-proc:none</compilerArgument>
 				</configuration>
 			</plugin>
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin</artifactId> 
-				<configuration> <outputDirectory>${project.build.directory}/reports</outputDirectory> 
-				<reportSets> <reportSet> <reports> <report>cobertura</report> </reports> 
-				</reportSet> </reportSets> <formats> <format>html</format> <format>xml</format> 
-				</formats> <quiet>true</quiet> <forceMojoExecution>true</forceMojoExecution> 
-				<check> <branchRate>85</branchRate> <lineRate>85</lineRate> <haltOnFailure>true</haltOnFailure> 
-				<totalBranchRate>85</totalBranchRate> <totalLineRate>85</totalLineRate> <packageLineRate>85</packageLineRate> 
-				<packageBranchRate>85</packageBranchRate> <regexes> <regex> <pattern>com.web.libraries.imdbquery.api.*</pattern> 
-				<branchRate>90</branchRate> <lineRate>80</lineRate> </regex> <regex> <pattern>com.web.libraries.imdbquery.command.*</pattern> 
-				<branchRate>90</branchRate> <lineRate>80</lineRate> </regex> <regex> <pattern>com.web.libraries.imdbquery.Main</pattern> 
-				<branchRate>0</branchRate> <lineRate>0</lineRate> </regex> </regexes> </check> 
-				<instrumentation> <ignores> <ignore>com.web.libraries.imdbquery.Main</ignore> 
-				</ignores> <excludes> <exclude>/com/web/libraries/webcrawler/**/*Test.class</exclude> 
-				</excludes> </instrumentation> </configuration> <executions> <execution> 
-				<goals> <goal>clean</goal> <goal>instrument</goal> <goal>check</goal> <goal>cobertura</goal> 
-				</goals> </execution> </executions> </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<configuration>
+					<outputDirectory>${project.build.directory}/reports</outputDirectory>
+					<reportSets>
+						<reportSet>
+							<reports>
+								<report>cobertura</report>
+							</reports>
+						</reportSet>
+					</reportSets>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+					<quiet>true</quiet>
+					<forceMojoExecution>true</forceMojoExecution>
+					<check>
+						<branchRate>85</branchRate>
+						<lineRate>85</lineRate>
+						<haltOnFailure>true</haltOnFailure>
+						<totalBranchRate>85</totalBranchRate>
+						<totalLineRate>85</totalLineRate>
+						<packageLineRate>85</packageLineRate>
+						<packageBranchRate>85</packageBranchRate>
+						<regexes>
+							<regex>
+								<pattern>com.web.libraries.imdbquery.api.*</pattern>
+								<branchRate>90</branchRate>
+								<lineRate>80</lineRate>
+							</regex>
+							<regex>
+								<pattern>com.web.libraries.imdbquery.command.*</pattern>
+								<branchRate>90</branchRate>
+								<lineRate>80</lineRate>
+							</regex>
+							<regex>
+								<pattern>com.web.libraries.imdbquery.Main</pattern>
+								<branchRate>0</branchRate>
+								<lineRate>0</lineRate>
+							</regex>
+						</regexes>
+					</check>
+					<instrumentation>
+						<ignores>
+							<ignore>com.web.libraries.imdbquery.Main</ignore>
+						</ignores>
+						<excludes>
+							<exclude>/com/web/libraries/webcrawler/**/*Test.class</exclude>
+						</excludes>
+					</instrumentation>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>clean</goal>
+							<goal>instrument</goal>
+							<goal>check</goal>
+							<goal>cobertura</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -371,7 +424,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
+				<!-- <dependencies> <dependency>add support for ssh/scp <groupId>org.apache.maven.wagon</groupId> 
+					<artifactId>wagon-ssh</artifactId> <version>1.0</version> </dependency> </dependencies> -->
 				<configuration>
+					<topSiteURL>https://hellgate75.github.io/imdb-query/</topSiteURL>
+					<port>9999</port>
+					<tempWebappDirectory>${basedir}/target/site/tempdir</tempWebappDirectory>
 					<reportPlugins>
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
