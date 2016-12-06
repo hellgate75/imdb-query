@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Imdb-query by hellgate75</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Imdb-query</h1>
+      <h2 class="project-tagline">Simple IMDb Java8 crawler</h2>
+      <a href="https://github.com/hellgate75/imdb-query" class="btn">View on GitHub</a>
+      <a href="https://github.com/hellgate75/imdb-query/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/hellgate75/imdb-query/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="imdb-search-shell" class="anchor" href="#imdb-search-shell" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>IMDb Search Shell</h1>
+
+<h2>
+<a id="goals" class="anchor" href="#goals" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Goals</h2>
+
+<p>This software has the goal to provide a simple IM-Db crawler. This crawler at the moment has not configuration to allow to different Movie Databases.</p>
+
+<h2>
+<a id="technology" class="anchor" href="#technology" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Technology</h2>
+
+<p>This software is entirely written in Java 1.8 and it's provided of a command line suite to activate the crawling. It's a passive system surfer using multiple threads and collecting the hierarchy in a specific standard output.</p>
+
+<p>The system is provided of a single running interface and a multiple customizable Output formatter and Output device interface. These classes are sibling of two interfaces in order : <code>ResultFormatter</code> and <code>ResultCollector</code>.</p>
+
+<p>The software has been written with the following minimal design patterns :</p>
+
+<ul>
+<li>
+<strong>Builder</strong> (<code>WebRestQueryConfigurationBuilder</code>)</li>
+<li>
+<strong>Method Factory</strong> (<code>WebRestQueryHelper#parseParametersAndRunCrawler</code>)</li>
+<li>
+<strong>Abstract Factory</strong> (<code>WebRestQuery</code> and <code>WebRestQueryConfiguration</code>)</li>
+<li>
+<strong>Command</strong> (<code>WebRestQuery</code>) recursive on itself on the scheduler request.</li>
+<li>
+<strong>Bridge</strong> (<code>ResultFormatter</code>, <code>ResultCollector</code>) </li>
+<li>
+<strong>Observer</strong> (<code>WebRestQuery</code> in order to <code>WebRestQueryProcess</code>) </li>
+<li>
+<strong>Visitor</strong> (<code>WebRestQueryConfiguration</code> is a Visitor behalf <code>WebRestQueryProcess</code> for the <code>Result</code> surfing state)</li>
+</ul>
+
+<p>The application is a snapshot release because it doesn't gather the my minimum level of isolation and test harness, due to the first few effort provided.</p>
+
+<p>In the future we will improve this application providing a wider range of configuration attributes, writing multiple formatters and collectors, providing a specific interpreter for the target platforms, define a Spring Boot and Spring Web configuration, isolating the API and providing a persistent layer to operate offline on API Search Project (dry-run, re-run, time schedule, remote access for defying and/or run processes behalf deamon agents). Just right now, we detach a Project UID that is transversable to all the application layer, and it can be persisted on a SQL (such as H2, ...), NoSQL (such as MongoDb, ..), File (such as a json file directory, ...) and/or configurable cache systems (such as ehcache, ...) all that in a kind of node environment application server, with specific a configuration, providing a configuration, a clustering, an administration and a maintenance services.</p>
+
+<p>The current command usage is completely dynamic and the current formatters and collectors are recovered by the related implementation package. Implementing new elements automatically are presented to the user. Any attribute has a default value included in a properties file, including the web site URL, so the errors can be related to the human mistakes, only!! :D</p>
+
+<h2>
+<a id="prerequisites" class="anchor" href="#prerequisites" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<p><strong>Java 1.8</strong> or upper and <strong>Maven 3.x</strong>. The exported variable <strong>JAVA_HOME</strong> pointing to the Java8 base folder.</p>
+
+<h2>
+<a id="note" class="anchor" href="#note" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NOTE</h2>
+
+<p>Due to reduced time most of the test has been put in hold at the moment. We decline any responsability related to damages directly or indirectly related to the use of this study library. </p>
+
+<h2>
+<a id="build" class="anchor" href="#build" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build</h2>
+
+<p>To build the application you can use the scripts <em>build.cmd</em> or <em>build.sh</em>.</p>
+
+<p>The Maven 3.x command line to build the project is : </p>
+
+<p><code>mvn -U -up clean cobertura:cobertura javadoc:jar source:jar install</code></p>
+
+<h2>
+<a id="command-line-interface" class="anchor" href="#command-line-interface" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command Line interface</h2>
+
+<p>To test the command line interface there is a <strong>windows command</strong> and a <strong>linux shell executable</strong> shell scripts in the <code>bin</code> directory. To have the usage list you need simply use the <code>--help</code> option. Alternatively you can use the folder bin jar <code>query.jar</code> in the base project folder.</p>
+
+<p>Here an example of use:</p>
+
+<p>Usage: api-search [options]</p>
+
+<p>samples: api-search --format=simple --api imdb --movie "Indiana Jones"
+         api-search --movie "Herry Potter"
+options:
+--format        Identifies the site map format
+     available formats :
+     plain      Plain Text Site Map Format
+default : plain
+--output        Identifies output device
+     available output :
+     stdout     Standard Output Writer
+default : stdout
+--extends       Identifies the number of threads extension on the surf. This is the minimum number of threads
+            running on the site hierarchy discovery
+default : 10
+-Dmovie=     Identifies the movie title query name
+--movie     Identifies the movie title query name
+default : null
+-DexactSearch=       Identifies the exact title search
+--exactSearch       Identifies the exact title search
+default : true
+-Dapi=       Identifies the default used API database
+--api       Identifies the default used API database
+     available engines :
+     tmdb       The Movie DB Rest API implementation (use -DexactSearch=0)
+     imdb       IMDB Rest API implementation
+     omdb       OMDB Rest API implementation - APIKey activation in progress
+default : com.web.libraries.imdbquery.api.controller.engines.TMDBApiEngine@6366ebe0</p>
+
+<h2>
+<a id="release-version" class="anchor" href="#release-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Release Version</h2>
+
+<p><code>1.0.0-SNAPSHOOT</code></p>
+
+<h2>
+<a id="road-map" class="anchor" href="#road-map" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Road Map</h2>
+
+<ul>
+<li><em>T.B.D.</em></li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/hellgate75/imdb-query">Imdb-query</a> is maintained by <a href="https://github.com/hellgate75">hellgate75</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
