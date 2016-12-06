@@ -3,7 +3,7 @@
 
 ##Goals
 
-This software has the goal to provide a simple IMBd crawler. This crawler at the moment has not configuration to allow to different Movie Databases.
+This software has the goal to provide a simple IM-Db crawler. This crawler at the moment has not configuration to allow to different Movie Databases.
 
 
 
